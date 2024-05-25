@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react'
+import React, { useState } from 'react'
 import { Nav } from './ui/nav'
 
 type Props = {}
@@ -12,14 +12,33 @@ import {
     MessageCircle,
     Calendar,
     Settings,
+    ReceiptText,
     LayoutDashboard,
+    ChevronRight,
   } from "lucide-react" 
+import { Button } from './ui/button'
 
 export default function SideNavbar({}: Props) {
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  function toggleSidebar() {
+    setIsCollapsed(!isCollapsed);
+  }
+
   return (
-    <div>
+    <div className="relative min-w-[80px] border-r px-3  pb-10 pt-24 ">
+              <div className="absolute right-[-20px] top-7">
+          <Button
+                      onClick={toggleSidebar}
+
+            variant="secondary"
+            className=" rounded-full p-2"
+          >
+            <ChevronRight />
+            </Button>
+        </div>
         <Nav
-            isCollapsed={false  }
+            isCollapsed={isCollapsed}
             links={[
               {
                 title: "Overview",
@@ -43,6 +62,12 @@ export default function SideNavbar({}: Props) {
                 title: "Clients",
                 href: "/clients",
                 icon: Users,
+                variant: "ghost",
+              },
+              {
+                title: "Invoices",
+                href: "/invoices",
+                icon: ReceiptText,
                 variant: "ghost",
               },
               {
