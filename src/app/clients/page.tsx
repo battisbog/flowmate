@@ -1,19 +1,21 @@
-import { DataTable } from '@/components/Datatable'
-import PageTitle from '@/components/PageTitle'
-import { ColumnDef } from '@tanstack/react-table'
-import React from 'react'
+"use client";
 
-type Props = {}
+import { DataTable } from "@/components/Datatable";
+import PageTitle from "@/components/PageTitle";
+import { Button } from "@/components/ui/button";
+import { Pencil, X } from "lucide-react";
+import { ColumnDef } from "@tanstack/react-table";
+import React from "react";
 
 export type Client = {
-  id: string
-  name: string
-  email: string
-  phone: string
-  cases: Array<string>
-}
- 
-export const columns: ColumnDef<Client>[] = [
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  cases: Array<string>;
+};
+
+const columns: ColumnDef<Client>[] = [
   {
     accessorKey: "id",
     header: "ID",
@@ -30,10 +32,35 @@ export const columns: ColumnDef<Client>[] = [
     accessorKey: "phone",
     header: "Phone",
   },
+  {
+    accessorKey: "cases",
+    header: "Cases",
+    cell: ({ row }) => row.original.cases.join(", "), // Display cases as a comma-separated list
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => (
+      <div className="flex space-x-2">
+        <Button
+          onClick={() => handleEdit(row.original.id)}
+          variant="outline"
+          className="w-8 h-8 p-0 flex items-center justify-center"
+        >
+          <Pencil className="w-4 h-4" />
+        </Button>
+        <Button
+          onClick={() => handleDelete(row.original.id)}
+          variant="destructive"
+          className="w-8 h-8 p-0 flex items-center justify-center"
+        >
+          <X className="w-4 h-4" />
+        </Button>
+      </div>
+    ),
+  },
+];
 
-]
-
-export const data: Client[] = [
+const data: Client[] = [
   {
     id: "728ed52f",
     name: "John Doe",
@@ -85,12 +112,21 @@ export const data: Client[] = [
   },
 ];
 
-export default function  ({}: Props) {
+const handleEdit = (id: string) => {
+  // Implement edit functionality
+  console.log(`Edit client with id: ${id}`);
+};
+
+const handleDelete = (id: string) => {
+  // Implement delete functionality
+  console.log(`Delete client with id: ${id}`);
+};
+
+export default function Clients() {
   return (
-    <div className="flex flex-col gap-5  w-full">
-      <PageTitle title='Clients' />
+    <div className="flex flex-col gap-5 w-full">
+      <PageTitle title="Clients" />
       <DataTable columns={columns} data={data} />
     </div>
-  ) 
+  );
 }
-
