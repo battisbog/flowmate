@@ -1,26 +1,27 @@
-import Card, { CardProps } from "@/components/Card";
+import Card, { CardContent, CardProps } from "@/components/Card";
 import PageTitle from "@/components/PageTitle";
-import { DollarSign, Users, CreditCard, Activity } from "lucide-react";
+import { DollarSign, Users, Clock, Activity } from "lucide-react";
 
 const cardData: CardProps[] = [
   {
     label: "Total Revenue",
-    amount: "$45,231.89",
+    amount: "$20,231.89",
     discription: "+20.1% from last month",
     icon: DollarSign
   },
   {
-    label: "Subscriptions",
-    amount: "+2350",
+    label: "Hours Billed",
+    amount: "150",
+    discription: "+19% from last month",
+    icon: Clock
+  },
+  {
+    label: "New clients",
+    amount: "+3",
     discription: "+180.1% from last month",
     icon: Users
   },
-  {
-    label: "Sales",
-    amount: "+12,234",
-    discription: "+19% from last month",
-    icon: CreditCard
-  },
+
   {
     label: "Active Now",
     amount: "+573",
@@ -44,6 +45,23 @@ export default function Home() {
             label={d.label}
           />
         ))}
+      </section>
+
+      <section className="grid grid-cols-1  gap-4 transition-all lg:grid-cols-2">
+        <CardContent>
+          <p className="p-4 font-semibold">Calendar</p>
+
+        </CardContent>
+        <CardContent className="flex justify-between gap-4">
+          <section>
+            <p>Deadlines</p>
+            <p className="text-sm text-gray-400">
+              No upcoming deadlines to show.
+            </p>
+          </section>
+        </CardContent>
+
+        {/*  */}
       </section>
     </div>
   );
