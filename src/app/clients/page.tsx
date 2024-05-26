@@ -1,12 +1,34 @@
 "use client";
 
+import { useState } from "react";
 import { DataTable } from "@/components/Datatable";
 import PageTitle from "@/components/PageTitle";
 import { Button } from "@/components/ui/button";
-import { Pencil, X } from "lucide-react";
+import { Pencil, X, Filter, SortAsc, UserPlus } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import {
+  Command,
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+} from "@/components/ui/command";
 import { ColumnDef } from "@tanstack/react-table";
 import React from "react";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 export type Client = {
   id: string;
@@ -133,16 +155,88 @@ const handleEdit = (id: string) => {
   console.log(`Edit client with id: ${id}`);
 };
 
-const handleDelete = (id: string) => {
+const handleDelete = async (id: string) => {
   // Implement delete functionality
   console.log(`Delete client with id: ${id}`);
+
+  // Example delete request
+  try {
+    const response = await fetch(`/api/clients/${id}`, {
+      method: 'DELETE',
+    });
+
+    if (response.ok) {
+      // Handle successful deletion
+      console.log(`Client with id: ${id} deleted successfully.`);
+      // Optionally, update the state to remove the deleted client from the list
+    } else {
+      // Handle error
+      console.error(`Failed to delete client with id: ${id}`);
+    }
+  } catch (error) {
+    // Handle error
+    console.error(`An error occurred: ${error}`);
+  }
+};
+
+const handleAddClient = () => {
+  // Implement add client functionality, e.g., open a modal or navigate to the add client page
+  console.log("Add client button clicked");
 };
 
 export default function Clients() {
+  const [isFilterDialogOpen, setFilterDialogOpen] = useState(false);
+
+  const handleFilter = () => {
+    setFilterDialogOpen(true);
+  };
+
   return (
     <div className="flex flex-col gap-5 w-full">
-      <PageTitle title="Clients" />
+      <div className="flex justify-between items-center">
+        <PageTitle title="Clients" />
+        <div className="flex space-x-2">
+          <Button
+            variant="outline"
+            className="flex items-center space-x-2"
+            onClick={handleFilter}
+          >
+            <Filter className="w-4 h-4" />
+            <span>Filter</span>
+          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="flex items-center space-x-2">
+                <SortAsc className="w-4 h-4" />
+                <span>Sort by</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem onClick={() => console.log('Sort by Name')}>Name</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => console.log('Sort by Email')}>Email</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => console.log('Sort by Phone')}>Phone</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <Button onClick={handleAddClient} className="flex items-center space-x-2">
+            <UserPlus className="w-4 h-4" />
+            <span>Add Client</span>
+          </Button>
+        </div>
+      </div>
       <DataTable columns={columns} data={data} />
+      <CommandDialog open={isFilterDialogOpen} onOpenChange={setFilterDialogOpen}>
+        <CommandInput placeholder="Type a command or search..." />
+        <CommandList>
+          <CommandEmpty>No results found.</CommandEmpty>
+          <CommandGroup heading="Clients">
+            {data.map(client => (
+              <CommandItem key={client.id} onSelect={() => console.log(`Selected client ${client.id}`)}>
+                {client.name} - {client.email} - {client.phone}
+              </CommandItem>
+            ))}
+          </CommandGroup>
+        </CommandList>
+      </CommandDialog>
     </div>
   );
 }
