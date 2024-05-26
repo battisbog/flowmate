@@ -33,9 +33,9 @@ export default function SideNavbar({}: Props) {
   return (
     <div className="relative min-w-[80px] border-r px-3 pb-10 pt-6">
       {/* Logo Placeholder */}
-      <div className={`flex justify-center ${isCollapsed ? 'py-2' : 'py-6'}`}>
-        <div className={`w-16 h-16 ${isCollapsed ? 'hidden' : ''}`}>
-          <img src="../../app/favicon.png" alt="Logo" className="w-full h-full object-contain"/>
+      <div className={`flex justify-center mb-4 ${isCollapsed ? 'py-2' : 'py-4'}`}>
+        <div className={`${isCollapsed ? 'hidden' : ''}`}>
+          <h1 className="text-xl font-bold">flowmate</h1>
         </div>
       </div>
         {!mobileWidth && (
