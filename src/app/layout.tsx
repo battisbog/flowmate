@@ -1,8 +1,10 @@
+// app/layout.tsx
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import SideNavbar from "@/components/SideNavbar";
+import Headbar from "@/components/Headbar";  // Import the Headbar component
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,8 +29,11 @@ export default function RootLayout({
         >
           {/* Sidebar */}
           <SideNavbar  /> 
-          {/* Main Page */}
-          <div className="p-8 w-full">{children}</div>
+          {/* Main Content */}
+          <div className="flex flex-col w-full">
+            <Headbar />  {/* Add the Headbar here */}
+            <div className="p-8 w-full">{children}</div>
+          </div>
         </body>
     </html>
   );
