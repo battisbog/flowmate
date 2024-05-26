@@ -17,15 +17,14 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import {
-  Command,
   CommandDialog,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
   CommandList,
-  CommandSeparator,
 } from "@/components/ui/command";
+import AddClientDialog from "./AddClientDialog";  // Import the AddClientDialog component
 import { ColumnDef } from "@tanstack/react-table";
 import React from "react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -179,11 +178,6 @@ const handleDelete = async (id: string) => {
   }
 };
 
-const handleAddClient = () => {
-  // Implement add client functionality, e.g., open a modal or navigate to the add client page
-  console.log("Add client button clicked");
-};
-
 export default function Clients() {
   const [isFilterDialogOpen, setFilterDialogOpen] = useState(false);
 
@@ -217,10 +211,7 @@ export default function Clients() {
               <DropdownMenuItem onClick={() => console.log('Sort by Phone')}>Phone</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <Button onClick={handleAddClient} className="flex items-center space-x-2">
-            <UserPlus className="w-4 h-4" />
-            <span>Add Client</span>
-          </Button>
+          <AddClientDialog />  {/* AddClientDialog component */}
         </div>
       </div>
       <DataTable columns={columns} data={data} />
