@@ -61,7 +61,7 @@ const AddClientDialog = () => {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Add New Client</DialogTitle>
-          <DialogDescription>Fill in the client's details below:</DialogDescription>
+          <DialogDescription>Fill in the details below:</DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleAddClient)} className="space-y-4">

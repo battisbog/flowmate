@@ -2,7 +2,7 @@
 
 import Card, { CardContent, CardProps } from "@/components/Card";
 import PageTitle from "@/components/PageTitle";
-import Deadlines, { DeadlinesProps } from "@/components/deadlines";
+import Deadlines, { DeadlinesProps } from "@/components/Deadlines";
 import { DollarSign, Users, Clock, Activity } from "lucide-react";
 import { useState } from "react";
 import Calendar from "react-calendar";
@@ -87,7 +87,8 @@ export default function Home() {
       <CardContent>
           <p className="p-4 font-semibold">Calendar</p>
           <div className="p-4">
-            <Calendar onChange={setDate} value={date} className="w-full h-full" />
+            {/* <Calendar onChange={setDate} value={date} className="w-full h-full" /> */}
+            <Calendar value={date} className="w-full h-full" />
           </div>
         </CardContent>
         <CardContent className="flex justify-between gap-4">
