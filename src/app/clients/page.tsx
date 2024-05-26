@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Pencil, X } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
 import React from "react";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 
 export type Client = {
   id: string;
@@ -48,13 +49,28 @@ const columns: ColumnDef<Client>[] = [
         >
           <Pencil className="w-4 h-4" />
         </Button>
-        <Button
-          onClick={() => handleDelete(row.original.id)}
-          variant="destructive"
-          className="w-8 h-8 p-0 flex items-center justify-center"
-        >
-          <X className="w-4 h-4" />
-        </Button>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button
+              variant="destructive"
+              className="w-8 h-8 p-0 flex items-center justify-center"
+            >
+              <X className="w-4 h-4" />
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. This will permanently delete the client and remove their data from our servers.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={() => handleDelete(row.original.id)}>Delete</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     ),
   },
