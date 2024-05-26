@@ -2,6 +2,7 @@
 
 import Card, { CardContent, CardProps } from "@/components/Card";
 import PageTitle from "@/components/PageTitle";
+import Deadlines, { DeadlinesProps } from "@/components/deadlines";
 import { DollarSign, Users, Clock, Activity } from "lucide-react";
 import { useState } from "react";
 import Calendar from "react-calendar";
@@ -34,6 +35,35 @@ const cardData: CardProps[] = [
   }
 ];
 
+const deadlineData: DeadlinesProps[] = [
+  {
+    case_name: "Morgage lender case",
+    description: "Morgage lender case description",
+    time: "11:30 pm"
+  },
+  {
+    case_name: "Morgage lender case",
+    description: "Morgage lender case description",
+    time: "11:30 pm"
+  },
+  {
+    case_name: "Morgage lender case",
+    description: "Morgage lender case description",
+    time: "11:30 pm"
+  },
+  {
+    case_name: "Morgage lender case",
+    description: "Morgage lender case description",
+    time: "11:30 pm"
+  },
+  {
+    case_name: "Morgage lender case",
+    description: "Morgage lender case description",
+    time: "11:30 pm"
+  },
+];
+
+
 
 export default function Home() {
   const [date, setDate] = useState(new Date());
@@ -61,12 +91,20 @@ export default function Home() {
           </div>
         </CardContent>
         <CardContent className="flex justify-between gap-4">
-          <section>
-            <p>Deadlines</p>
+           <section>
+            <p>Recent Sales</p>
             <p className="text-sm text-gray-400">
-              No upcoming deadlines to show.
+              You have {cardData.length + 1} upcoming deadlines.
             </p>
           </section>
+          {deadlineData.map((d, i) => (
+            <Deadlines
+              key={i}
+              case_name={d.case_name}
+              description={d.description}
+              time={d.time}
+            />
+          ))}
         </CardContent>
 
         {/*  */}
