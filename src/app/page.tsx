@@ -1,6 +1,10 @@
+"use client";
+
 import Card, { CardContent, CardProps } from "@/components/Card";
 import PageTitle from "@/components/PageTitle";
 import { DollarSign, Users, Clock, Activity } from "lucide-react";
+import { useState } from "react";
+import Calendar from "react-calendar";
 
 const cardData: CardProps[] = [
   {
@@ -32,6 +36,8 @@ const cardData: CardProps[] = [
 
 
 export default function Home() {
+  const [date, setDate] = useState(new Date());
+
   return (
     <div className="flex flex-col gap-5 w-full">
       <PageTitle title={"Overview"}/>
@@ -48,9 +54,11 @@ export default function Home() {
       </section>
 
       <section className="grid grid-cols-1  gap-4 transition-all lg:grid-cols-2">
-        <CardContent>
+      <CardContent>
           <p className="p-4 font-semibold">Calendar</p>
-
+          <div className="p-4">
+            <Calendar onChange={setDate} value={date} className="w-full h-full" />
+          </div>
         </CardContent>
         <CardContent className="flex justify-between gap-4">
           <section>
