@@ -34,13 +34,16 @@ const Headbar = () => {
         <Button
           variant="outline"
           onClick={() => setCommandDialogOpen(true)}
-          className="flex items-center justify-between space-x-2 w-72 p-2"
+          className="relative flex items-center justify-between space-x-2 w-72 p-2 bg-background text-sm font-normal text-muted-foreground shadow-none rounded-[0.5rem] sm:pr-12 md:w-40 lg:w-64"
         >
           <div className="flex items-center space-x-2">
             <Search className="w-5 h-5 text-gray-500" />
-            <span>Search</span>
+            <span className="hidden lg:inline-flex">Search</span>
+            <span className="inline-flex lg:hidden">Search</span>
           </div>
-          <span className="text-gray-500">⌘F</span>
+          <kbd className="pointer-events-none absolute right-[0.4rem] top-[0.5rem] hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
+            <span className="text-xs">⌘</span>K
+          </kbd>
         </Button>
         <CommandDialog open={isCommandDialogOpen} onOpenChange={setCommandDialogOpen}>
           <CommandInput placeholder="Type a command or search..." />
