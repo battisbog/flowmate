@@ -1,10 +1,11 @@
-// app/layout.tsx
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import SideNavbar from "@/components/SideNavbar";
-import Headbar from "@/components/Headbar";  // Import the Headbar component
+import Headbar from "@/components/Headbar";
+import { UserProvider } from '@auth0/nextjs-auth0/client';
+import ProtectedLayout from '@/components/ProtectedLayout';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,24 +18,26 @@ export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
+  
 }>) {
   return (
     <html lang="en">
-      <body className={cn("min-h-screen w-full bg-white text-black flex",
-      inter.className,
-      {
-        'debug-screens': process.env.NODE_ENV==='development'
-        }
-      )}
-        >
-          {/* Sidebar */}
-          <SideNavbar  /> 
-          {/* Main Content */}
-          <div className="flex flex-col w-full">
-            <Headbar />  {/* Add the Headbar here */}
-            <div className="p-8 w-full">{children}</div>
-          </div>
-        </body>
+      <head>
+        {/* Metadata goes here */}
+      </head>
+      <body className={cn("min-h-screen w-full bg-white text-black flex", inter.className)}>
+        <UserProvider>
+          <ProtectedLayout>
+            {/* Sidebar */}
+            <SideNavbar />
+            {/* Main Content */}
+            <div className="flex flex-col w-full">
+              <Headbar />
+              <div className="p-8 w-full">{children}</div>
+            </div>
+          </ProtectedLayout>
+        </UserProvider>
+      </body>
     </html>
   );
 }
